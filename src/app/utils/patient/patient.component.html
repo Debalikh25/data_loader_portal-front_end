@@ -1,0 +1,21 @@
+
+<div class="patient">
+    <div class="row">
+        <div class="col-md-4">
+           <strong>Name :</strong><p>{{patient.patientName}}</p>
+           <strong>Contact :</strong><p>{{patient.patientContactNumber}}</p>
+           <strong>Status:</strong><p>{{patient.status}}</p>
+        </div>
+
+        <div class="col-md-4">
+          <strong>Email :</strong><p>{{patient.patientEmail}}</p>
+          <strong>DOB :</strong><p>{{patient.patientDateOfBirth | date}}</p>
+        </div>
+
+
+
+        <div class="col-md-4">
+            <button (click)="update(patient)" [ngClass]="{'btn btn-success': process === true, 'btn btn-info' : process === false }" >{{process == false ? 'Update' : 'Process'}}</button>
+        </div>
+    </div>
+</div>

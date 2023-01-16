@@ -1,0 +1,292 @@
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
+ @import url('https://fonts.googleapis.com/css?family=Roboto');
+ html, body, * {
+	 box-sizing: border-box;
+	 font-size: 16px;
+}
+ html, body {
+	 height: 100%;
+	 text-align: center;
+}
+
+.mupload{
+	font-size : 80px;
+}
+
+.fileUploadDesign{
+	border : 2px solid grey;
+	text-align: center;
+	padding : 20px;
+}
+
+.fileUploadDesign:hover{
+    
+	 cursor : pointer;
+	  border-color: #454cad;
+
+}
+ body {
+	 padding: 2rem;
+	 background: #f8f8f8;
+}
+ h2 {
+	 font-family: "Roboto", sans-serif;
+	 font-size: 26px;
+	 line-height: 1;
+	 color: #454cad;
+	 margin-bottom: 0;
+}
+ p {
+	 font-family: "Roboto", sans-serif;
+	 font-size: 18px;
+	 color: #5f6982;
+}
+ .uploader {
+	 display: block;
+	 clear: both;
+	 margin: 0 auto;
+	 width: 100%;
+	 max-width: 600px;
+}
+ .uploader label {
+	 float: left;
+	 clear: both;
+	 width: 100%;
+	 padding: 2rem 1.5rem;
+	 text-align: center;
+	 background: #fff;
+	 border-radius: 7px;
+	 border: 3px solid #eee;
+	 transition: all 0.2s ease;
+	 user-select: none;
+}
+ .uploader label:hover {
+	 border-color: #454cad;
+}
+ .uploader label.hover {
+	 border: 3px solid #454cad;
+	 box-shadow: inset 0 0 0 6px #eee;
+}
+ .uploader label.hover #start i.fa {
+	 transform: scale(0.8);
+	 opacity: 0.3;
+}
+ .uploader #start {
+	 float: left;
+	 clear: both;
+	 width: 100%;
+}
+ .uploader #start.hidden {
+	 display: none;
+}
+ .uploader #start i.fa {
+	 font-size: 50px;
+	 margin-bottom: 1rem;
+	 transition: all 0.2s ease-in-out;
+}
+ .uploader #response {
+	 float: left;
+	 clear: both;
+	 width: 100%;
+}
+ .uploader #response.hidden {
+	 display: none;
+}
+ .uploader #response #messages {
+	 margin-bottom: 0.5rem;
+}
+ .uploader #file-image {
+	 display: inline;
+	 margin: 0 auto 0.5rem auto;
+	 width: auto;
+	 height: auto;
+	 max-width: 180px;
+}
+ .uploader #file-image.hidden {
+	 display: none;
+}
+ .uploader #notimage {
+	 display: block;
+	 float: left;
+	 clear: both;
+	 width: 100%;
+}
+ .uploader #notimage.hidden {
+	 display: none;
+}
+ .uploader progress, .uploader .progress {
+	 display: inline;
+	 clear: both;
+	 margin: 0 auto;
+	 width: 100%;
+	 max-width: 180px;
+	 height: 8px;
+	 border: 0;
+	 border-radius: 4px;
+	 background-color: #eee;
+	 overflow: hidden;
+}
+ .uploader .progress[value]::-webkit-progress-bar {
+	 border-radius: 4px;
+	 background-color: #eee;
+}
+ .uploader .progress[value]::-webkit-progress-value {
+	 background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+	 border-radius: 4px;
+}
+ .uploader .progress[value]::-moz-progress-bar {
+	 background: linear-gradient(to right, #393f90 0%, #454cad 50%);
+	 border-radius: 4px;
+}
+ .uploader input[type="file"] {
+	 display: none;
+}
+ .uploader div {
+	 margin: 0 0 0.5rem 0;
+	 color: #5f6982;
+}
+
+
+.title {
+    text-align: center;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+
+.fupload{
+	cursor : pointer;
+}
+
+.buttons {
+	text-align: center;;
+}
+
+
+.loader {
+	width: 38px;
+	height: 38px;
+	border-radius: 50%;
+	position: relative;
+	transform:rotate(45deg);
+	background: #fff;
+  }
+
+  
+
+
+   .spinner {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-top: -50px;
+    margin-left: -50px;
+    width: 100px;
+    height: 100px;
+   }
+  .loader::before {
+	content: "";
+	box-sizing: border-box;
+	position: absolute;
+	inset: 0px;
+	border-radius: 50%;
+	border:24px solid #FF3D00;
+	animation: prixClipFix 2s infinite linear;
+  }
+
+  @keyframes prixClipFix {
+	  0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+	  25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+	  50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+	  75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+	  100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+  }
+
+  .geeks {
+	height: 40px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+}
+
+.geeks span {
+	font-family: -apple-system, BlinkMacSystemFont,
+		"Segoe UI", Roboto,Oxygen, Ubuntu, Cantarell,
+		"Open Sans", "Helvetica Neue", sans-serif;
+	font-size: 24px;
+	color: green;
+	display: inline-block;
+	transition: all 0.5s;
+	animation: animate 2s infinite;
+}
+.geeks span:nth-child(1) {
+	animation-delay: 0.1s;
+}
+.geeks span:nth-child(2) {
+	animation-delay: 0.2s;
+}
+.geeks span:nth-child(3) {
+	animation-delay: 0.3s;
+}
+.geeks span:nth-child(4) {
+	animation-delay: 0.4s;
+}
+.geeks span:nth-child(5) {
+	animation-delay: 0.5s;
+}
+.geeks span:nth-child(6) {
+	animation-delay: 0.6s;
+}
+.geeks span:nth-child(7) {
+	animation-delay: 0.7s;
+}
+.geeks span:nth-child(8) {
+	animation-delay: 0.8s;
+}
+.geeks span:nth-child(9) {
+	animation-delay: 0.9s;
+}
+.geeks span:nth-child(10) {
+	animation-delay: 1s;
+}
+.geeks span:nth-child(11) {
+	animation-delay: 1.1s;
+}
+.geeks span:nth-child(12) {
+	animation-delay: 1.2s;
+}
+.geeks span:nth-child(13) {
+	animation-delay: 1.3s;
+}
+
+@keyframes animate {
+	0% {
+		color: green;
+		transform: translateY(0);
+		margin-left: 0;
+	}
+	25% {
+		color: green;
+		transform: translateY(-15px);
+		margin-left: 10px;
+	}
+	100% {
+		color: green;
+		transform: translateY(0);
+		margin-left: 0;
+	}
+} 
+
+
+.uploaded {
+	text-align: center;
+}
+
+#result {
+	display: none;
+}
+
+ 

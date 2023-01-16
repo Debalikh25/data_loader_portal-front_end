@@ -1,0 +1,13 @@
+.loginForm{
+    width : 50%;
+    padding : 30px;
+    border : 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top : 70px;
+    border-radius: 10px;
+}
+
+.verror {
+    color :red ;
+}

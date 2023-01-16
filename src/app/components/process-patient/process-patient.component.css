@@ -1,0 +1,13 @@
+.searchDiv {
+    width : 50%;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.sbtn{
+    height : 40px;
+}
+
+.search:hover{
+    cursor : pointer;
+}

@@ -1,0 +1,137 @@
+<div class="container">
+    <button routerLink="/home" class="btn btn-info mt-2"> <i class="fa fa-arrow-left"></i> Back to Home</button>
+    <app-title [title]="title"></app-title>
+
+    <div *ngIf="updateFlag == false">
+        <div class="searchDiv mt-4">
+            <label>Enter Patient Name / Id :</label>
+            <div class="input-group mt-2">
+
+                <input [(ngModel)]="data" type="text" class="form-control">
+                <span class="input-group-btn">
+                    <button (click)="search()" [disabled]="data == ''" class="btn btn-warning search"
+                        type="button"><i class="fa fa-search"></i></button>
+                </span>
+            </div>
+        </div>
+
+        <div *ngIf="message != ''" class="alert alert-danger mt-5" role="alert">
+            {{message}}
+        </div>
+
+        <div *ngIf="searchByName">
+            <app-patient [process]="false" *ngFor="let p of patients" (updatePatient)="update($event)" [patient]="p"></app-patient>
+        </div>
+
+        <div *ngIf="searchByName == false && patient.patientId">
+            <app-patient  [process]="false" (updatePatient)="update($event)" [patient]="patient"></app-patient>
+        </div>
+    </div>
+
+    <div *ngIf="updateFlag == true" class="updatePatient my-4">
+        <form #update="ngForm" (ngSubmit)="onUpdate(update.value)">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label>Name</label>
+                        <input type="text" name="patientName" class="form-control" [value]="patient.patientName"
+                            disabled />
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Email</label>
+                        <input type="email" #email="ngModel" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$"
+                            name="emailId" [(ngModel)]="patient.patientEmail" class="form-control"
+                            [value]="patient.patientEmail" required />
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)">
+
+                            <div *ngIf="email.errors?.['required']">
+                                <small class="verror">Email is required.</small>
+                            </div>
+
+                            <div *ngIf="email.errors?.['pattern']">
+                                <small class="verror">Email should be a valid email.</small>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>Address</label>
+                        <input type="text" minlength="10" name="address" [(ngModel)]="patient.patientAddress"
+                            class="form-control" [value]="patient.patientAddress" #address="ngModel" required />
+                        <div *ngIf="address.invalid && (address.dirty || address.touched)">
+
+                            <div *ngIf="address.errors?.['required']">
+                                <small class="verror">Address is required.</small>
+                            </div>
+
+                            <div *ngIf="address.errors?.['minlength']">
+                                <small class="verror">Min length is 10 characters</small>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label>Contact</label>
+                        <input type="text" #contact="ngModel" pattern="^[0-9]{10}$" name="contact"
+                            [(ngModel)]="patient.patientContactNumber" class="form-control"
+                            [value]="patient.patientContactNumber" required />
+                        <div *ngIf="contact.invalid && (contact.dirty || contact.touched)">
+
+                            <div *ngIf="contact.errors?.['required']">
+                                <small class="verror">Contact is required.</small>
+                            </div>
+
+                            <div *ngIf="contact.errors?.['pattern']">
+                                <small class="verror">Contact should 10 digits.</small>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label>DOB</label>
+                        <input type="text" #dob="ngModel"
+                            pattern="^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d$" name="dob"
+                            [(ngModel)]="patient.patientDateOfBirth" class="form-control"
+                            [value]="patient.patientDateOfBirth" required />
+                        <div *ngIf="dob.invalid && (dob.dirty || dob.touched)">
+
+                            <div *ngIf="dob.errors?.['required']">
+                                <small class="verror">DOB is required.</small>
+                            </div>
+
+                            <div *ngIf="dob.errors?.['pattern']">
+                                <small class="verror">Pattern should be MM-dd-yyyy</small>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                     <div class="mb-2">
+                      <p>  <strong>Status : </strong>{{patient.status}}</p>
+                     </div>
+                </div>
+            </div>
+
+
+
+            <div class="row">
+                <div class="col-sm-12 text-center">
+                    <input [disabled]="update.invalid" type="submit" class="btn btn-success mx-2" value="Update" />
+                    <button (click)="cancelUpdate()" class="btn btn-danger">Cancel</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>

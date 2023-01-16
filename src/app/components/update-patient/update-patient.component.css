@@ -1,0 +1,34 @@
+.searchDiv {
+    width : 50%;
+    margin-left : auto;
+    margin-right : auto;
+}
+
+.sbtn{
+    height : 40px;
+}
+
+.patients{
+    text-align: center;
+}
+
+.updatePatient{
+    width : 70%;
+    margin-left : auto;
+    margin-right : auto;
+    margin-bottom : 50px;
+}
+
+#btnSearch,
+#btnClear{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.verror {
+    color  : red;
+}
+
+.search:hover{
+    cursor : pointer;
+}

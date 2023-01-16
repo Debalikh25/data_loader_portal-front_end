@@ -1,0 +1,32 @@
+<div class="container">
+    <button routerLink="/home" class="btn btn-info mt-2"> <i class="fa fa-arrow-left"></i> Back to Home</button>
+    <app-title [title]="title"></app-title>
+
+    <div class="searchDiv mt-4">
+        <label>Enter Patient Name / Id :</label>
+        <div class="input-group mt-2">
+
+            <input [(ngModel)]="data" type="text" class="form-control">
+            <span class="input-group-btn">
+                <button (click)="search()" [disabled]="data == ''" class="btn btn-warning search" type="button"><i
+                        class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+
+    <div *ngIf="message != ''" class="alert alert-danger mt-5" role="alert">
+        {{message}}
+    </div>
+
+    <div *ngIf="searchByName">
+        <app-patient *ngFor="let p of patients" [process]="true" (updatePatient)="process($event)" [patient]="p">
+        </app-patient>
+    </div>
+
+    <div *ngIf="searchByName == false && patient.patientId">
+        <app-patient [process]="true" (updatePatient)="process($event)" [patient]="patient"></app-patient>
+    </div>
+
+
+
+</div>

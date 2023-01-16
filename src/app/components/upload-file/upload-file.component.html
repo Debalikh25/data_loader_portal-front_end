@@ -1,0 +1,138 @@
+<div class="container">
+
+  <button routerLink="/home" class="btn btn-info mt-2"> <i class="fa fa-arrow-left"></i> Back to Home</button>
+
+
+  <div *ngIf="!loading && uploaded" class="uploaded">
+
+    <img src="../../../assets/checked.png" alt="uploaded_image" width="200" height="200" />
+    <br>
+    <p class="mt-2 text-muted">File Uploaded</p>
+
+    <button (click)="uploadAgain()" class="btn btn-primary mx-3">Upload Again</button>
+    <button (click)="downloadPdf()" class="btn btn-warning">Download Outcome as Pdf</button>
+
+    <p class="mt-2">Patients Uploaded Successfully : <strong>{{response.successfullPatients.length}}</strong></p>
+    <p class="mt-2">Patient With Data Errors : <strong>{{response.invalidPatients.length}}</strong></p>
+
+    <div *ngIf="showInvoice == false" class="mt-3" id="result" #result>
+      <p>Patients Uploaded Successfully : <strong>{{response.successfullPatients.length}}</strong></p>
+      <p>Patient With Data Errors : <strong>{{response.invalidPatients.length}}</strong></p>
+      <div *ngIf="response.successfullPatients.length > 0" class="mt-4 mb-3">
+        <h3>Successfully Uploaded :</h3>
+        <table class="table table-bordered table-striped table-hover mt-3 mb-3">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>DOB</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Drug Id</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of response.successfullPatients">
+              <td>{{p.patientId}}</td>
+              <td>{{p.patientName}}</td>
+              <td>{{p.patientDateOfBirth}}</td>
+              <td>{{p.patientEmail}}</td>
+              <td>{{p.patientContactNumber}}</td>
+              <td>{{p.patientDrugId}}</td>
+              <td>{{p.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div *ngIf="response.invalidPatients.length > 0" class="mt-4 mb-3">
+        <h3>With Errors :</h3>
+        <table class="table table-bordered table-striped table-hover mt-3 mb-3">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>DOB</th>
+              <th>Email</th>
+              <th>Contact Number</th>
+              <th>Drug Id</th>
+              <th>Error</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of response.invalidPatients">
+              <td>{{p.patientName}}</td>
+              <td>{{p.patientDateOfBirth}}</td>
+              <td>{{p.patientEmail}}</td>
+              <td>{{p.patientContactNumber}}</td>
+              <td>{{p.patientDrugId}}</td>
+              <td>{{p.errorMessage}}</td>
+              <td>{{p.status}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="loading">
+    <span *ngIf="loading" class="loader spinner">
+
+    </span>
+  </div>
+
+  <div class="uploading" *ngIf="loading">
+    <div class="geeks">
+      <span>U</span>
+      <span>P</span>
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </div>
+
+  </div>
+
+
+  <div *ngIf="loading == false && uploaded == false">
+    <div class="title">
+      <h2 class="mt-3 mb-3">Upload Patient DOC File Here</h2>
+      <p class="lead">The File Should Be in <b>Microsoft Excel Format</b></p>
+    </div>
+
+
+    <!-- Upload  -->
+    <form id="file-upload-form" class="uploader">
+
+      <label for="file-upload" class="fupload mb-3">
+
+
+        <i class="fa fa-upload mupload" aria-hidden="true"></i>
+
+
+        <img id="file-image" src="#" alt="Preview" class="hidden" />
+        <div *ngIf="correct == false">Click Icon To Select File</div>
+        <div *ngIf="correct"><strong>{{fileName}}</strong></div>
+        <div id="notimage" class="hidden">Please select an image</div>
+
+      </label>
+
+      <input id="file-upload" (change)="captureFile($event)" type="file" *ngIf="correct == false" />
+
+      <div class="buttons">
+        <button *ngIf="correct" (click)="upload()" class="btn btn-primary mx-2">Upload</button>
+        <button (click)="reset()" *ngIf="correct" class="btn btn-warning">Reset</button>
+      </div>
+    </form>
+
+  </div>
+
+
+
+
+
+</div>
