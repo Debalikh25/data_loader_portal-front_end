@@ -17,7 +17,7 @@ export class ProcessPatientComponent implements OnInit {
   message: string = ""
   patient: any = {}
 
-  constructor(private ps: PatientService, private auth:AuthService ,private router: Router) { }
+  constructor(private ps: PatientService, private auth: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -27,37 +27,51 @@ export class ProcessPatientComponent implements OnInit {
     this.patients = []
     this.message = ""
     if (isNaN(this.data)) {
-      this.ps.getPatientByName(this.data , localStorage.getItem("token")).subscribe(res => {
+      this.ps.getPatientByName(this.data, localStorage.getItem("token")).subscribe(res => {
         this.searchByName = true;
-        if(res.expired == true){
-          Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-            this.router.navigateByUrl("/").then(()=>{
+
+        this.patients = res
+
+      }, (error) => {
+        if (error.status == 400) {
+          //Bad Request
+          this.message = error.error.message
+
+        } else if (error.status == 401) {
+          //Expired
+          Swal.fire('Your Session Expired', 'Please Login Again', 'info').then(() => {
+            this.router.navigateByUrl("/").then(() => {
               window.location.reload();
             })
           })
-        }
-        if (res.message) {
-          this.message = res.message;
-        } else {
-          this.patients = res
+        } else if (error.status == 403) {
+          //Forbidden -> No token present in header
+          Swal.fire("No Token Present", '', 'error')
         }
       })
     } else {
       this.searchByName = false;
-      this.ps.getPatientById(this.data , localStorage.getItem("token")).subscribe(res => {
-        if(res.expired == true){
-          Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-            this.router.navigateByUrl("/").then(()=>{
+      this.ps.getPatientById(this.data, localStorage.getItem("token")).subscribe(res => {
+
+        this.patient = res;
+
+
+      }, (error) => {
+        if (error.status == 400) {
+          //Bad Request
+          this.message = error.error.message
+
+        } else if (error.status == 401) {
+          //Expired
+          Swal.fire('Your Session Expired', 'Please Login Again', 'info').then(() => {
+            this.router.navigateByUrl("/").then(() => {
               window.location.reload();
             })
           })
+        } else if (error.status == 403) {
+          //Forbidden -> No token present in header
+          Swal.fire("No Token Present", '', 'error')
         }
-        if (res.message) {
-          this.message = res.message
-        } else {
-          this.patient = res;
-        }
-
       })
 
     }
@@ -75,33 +89,38 @@ export class ProcessPatientComponent implements OnInit {
       cancelButtonText: 'Dont Send'
     }).then((result) => {
       if (result.value) {
-        this.patient.status = "Processed"
-        this.ps.processPatient(this.patient , localStorage.getItem("token")).subscribe(res => {
-          if(res.expired == true){
-            Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-              this.router.navigateByUrl("/").then(()=>{
+
+        this.ps.processPatient(this.patient, localStorage.getItem("token")).subscribe(res => {
+
+          Swal.fire(res.message, '', 'success').then(() => {
+            this.patients = []
+            this.patient = {}
+            this.data = ""
+            this.searchByName = false
+            this.message = ""
+            this.router.navigateByUrl("/process")
+          })
+
+        }, (error) => {
+          if (error.status == 400) {
+            //Bad Request
+
+          } else if (error.status == 401) {
+            //Expired
+            Swal.fire('Your Session Expired', 'Please Login Again', 'info').then(() => {
+              this.router.navigateByUrl("/").then(() => {
                 window.location.reload();
               })
             })
-          }
-          if (res.message) {
-            Swal.fire(res.message, '', 'success').then(() => {
-              this.patients = []
-              this.patient = {}
-              this.data = ""
-              this.searchByName = false
-              this.message = ""
-              this.router.navigateByUrl("/process")
-            })
+          } else if (error.status == 403) {
+            //Forbidden -> No token present in header
+            Swal.fire("No Token Present", 'Token Needed', 'error')
           }
         })
 
       }
     })
   }
-
-
-
-
-
 }
+
+

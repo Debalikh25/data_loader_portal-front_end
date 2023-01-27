@@ -11,7 +11,7 @@ export class PatientService {
    uploadData(formData: any, tkn: any): Observable<any> {
 
       let headers = new HttpHeaders({
-         "auth": `Bearer ${tkn}`
+         "Authorization": `Bearer ${tkn}`
       });
 
       return this.http.post('http://localhost:7001/api/v1/upload', formData, {

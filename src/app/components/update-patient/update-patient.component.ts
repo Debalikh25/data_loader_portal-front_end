@@ -30,36 +30,45 @@ export class UpdatePatientComponent implements OnInit {
     this.message = ""
     if (isNaN(this.data)) {
       this.ps.getPatientByName(this.data , localStorage.getItem("token")).subscribe(res => {
-        if(res.expired == true){
+
+       this.searchByName = true;
+        this.patients = res
+        
+      } , (error)=>{
+        if(error.status == 400){
+            //Bad Request
+            this.message  = error.error.message
+        }else if(error.status == 401){
+            //Expired
           Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
             this.router.navigateByUrl("/").then(()=>{
               window.location.reload();
             })
           })
-        }
-        this.searchByName = true;
-        if (res.message) {
-          this.message = res.message;
-        } else {
-          this.patients = res
+        }else if(error.status == 403){
+             //Forbidden -> No token present in header
+              Swal.fire("No Token Present" , '' , 'error')
         }
       })
     } else {
       this.searchByName = false;
      this.ps.getPatientById(this.data , localStorage.getItem("token")).subscribe(res => {
-      if(res.expired == true){
-        Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-          this.router.navigateByUrl("/").then(()=>{
-            window.location.reload();
+       this.patient = res;
+      } ,(error)=>{
+        if(error.status == 400){
+            //Bad Request
+            this.message  = error.error.message
+        }else if(error.status == 401){
+            //Expired
+          Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
+            this.router.navigateByUrl("/").then(()=>{
+              window.location.reload();
+            })
           })
-        })
-      }
-         if(res.message){
-          this.message = res.message
-         }else{
-          this.patient = res;
-         }
-       
+        }else if(error.status == 403){
+             //Forbidden -> No token present in header
+             Swal.fire("No Token Present" , '' , 'error')
+        }
       })
 
     }
@@ -80,16 +89,7 @@ export class UpdatePatientComponent implements OnInit {
      
   
     this.ps.updatePatient(this.patient , localStorage.getItem("token")).subscribe((res) => {
-      if(res.expired == true){
-        Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-          this.router.navigateByUrl("/").then(()=>{
-            window.location.reload();
-          })
-        })
-      }
-      if (res.error) {
-        Swal.fire("Failed to Update", res.error, 'error');
-      } else if (res.message) {
+  
         Swal.fire(res.message, '', 'success').then(() => {
           this.data  = ""
           this.updateFlag = false;
@@ -97,6 +97,22 @@ export class UpdatePatientComponent implements OnInit {
           this.patient = {}
           this.router.navigateByUrl("/update")
         })
+      
+    } ,(error)=>{
+      if(error.status == 400){
+          //Bad Request - Patient Not Found
+          Swal.fire("Failed to Update", error.error.message, 'error');
+     
+      }else if(error.status == 401){
+          //Expired
+          Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
+            this.router.navigateByUrl("/").then(()=>{
+              window.location.reload();
+            })
+          })
+      }else if(error.status == 403){
+           //Forbidden -> No token present in header
+           Swal.fire("No Token Present" , '' , 'error')
       }
     })
   }

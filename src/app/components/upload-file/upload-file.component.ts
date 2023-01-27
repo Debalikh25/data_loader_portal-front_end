@@ -58,28 +58,39 @@ export class UploadFileComponent implements OnInit {
     const file = new FormData();
     file.append("file", this.file)
     this.ps.uploadData(file , localStorage.getItem("token")).subscribe(res => {
-      if(res.expired == true){
-        Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
-          this.router.navigateByUrl("/").then(()=>{
-            window.location.reload();
-          })
-        })
-      }
-      this.loading = false;
-      if (res.message) {
-        Swal.fire(res.message, 'Please Upload Again', 'error').then(() => {
-          this.file = null;
-          this.fileName = "";
-          this.correct = false;
-        })
-      } else {
-        //File Uploaded Successfully
+     
+      //File Uploaded Successfully
 
         this.file = null;
         this.fileName = "";
         this.correct = false;
         this.uploaded = true;
         this.response = res;
+        this.loading = false;
+        
+    } ,(error)=>{
+      if(error.status == 400){
+               //Bad Request
+        Swal.fire(error.error.message, 'Please Upload Again', 'error').then(() => {
+          this.file = null;
+          this.fileName = "";
+          this.correct = false;
+        })
+          
+     
+      }else if(error.status == 401){
+          //Expired
+        Swal.fire('Your Session Expired' , 'Please Login Again' , 'info').then(()=>{
+          this.router.navigateByUrl("/").then(()=>{
+            window.location.reload();
+          })
+        })
+        this.loading = false;
+      }else if(error.status == 403){
+           //Forbidden -> No token present in header
+           Swal.fire("No Token Present" , '' , 'error')
+      }else if(error.status == 500){
+        Swal.fire('Failed to Upload Error' , error.error.message , 'error')
       }
     })
 
