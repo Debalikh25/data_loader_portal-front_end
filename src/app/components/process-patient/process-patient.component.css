@@ -11,3 +11,7 @@
 .search:hover{
     cursor : pointer;
 }
+
+.container {
+    margin-bottom: 130px;
+}
