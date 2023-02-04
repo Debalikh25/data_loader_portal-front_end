@@ -91,7 +91,10 @@ export class UploadFileComponent implements OnInit {
            Swal.fire("No Token Present" , '' , 'error')
       }else if(error.status == 500){
         Swal.fire('Failed to Upload Error' , error.error.message , 'error')
+      }else {
+        Swal.fire("Server is Down" , "Please Try Again Later" , "error")
       }
+     
     })
 
   }

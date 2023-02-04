@@ -116,6 +116,9 @@ export class ProcessPatientComponent implements OnInit {
             //Forbidden -> No token present in header
             Swal.fire("No Token Present", 'Token Needed', 'error')
           }
+          else {
+            Swal.fire("Server is Down" , "Please Try Again Later" , "error")
+          }
         })
 
       }

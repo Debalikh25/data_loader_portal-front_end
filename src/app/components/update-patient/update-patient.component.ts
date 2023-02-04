@@ -114,6 +114,9 @@ export class UpdatePatientComponent implements OnInit {
            //Forbidden -> No token present in header
            Swal.fire("No Token Present" , '' , 'error')
       }
+      else {
+        Swal.fire("Server is Down" , "Please Try Again Later" , "error")
+      }
     })
   }
 

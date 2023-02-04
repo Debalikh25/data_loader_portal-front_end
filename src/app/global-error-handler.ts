@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 export class GlobalErrorHandler implements ErrorHandler{
 
     handleError(error: any): void {
+        
         if(error instanceof HttpErrorResponse){
             let message = error.message
             Swal.fire("Server is Down" , "Please Try Again Later" , "error")

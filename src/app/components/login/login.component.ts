@@ -35,8 +35,12 @@ export class LoginComponent implements OnInit {
         })
       }
     } , (error)=>{
+      
       if(error.status == 400){
          this.alert = error.error.message
+      }
+      else {
+        Swal.fire("Server is Down" , "Please Try Again Later" , "error")
       }
     })
   }
